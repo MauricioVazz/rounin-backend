@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  publicId  String  @unique @default(uuid())
+
+  username  String  @unique
+  email     String  @unique
+  password  String
+
+  bio       String? @db.Text
+
+  avatarUrl      String?
+  avatarProvider AvatarProvider @default(GENERATED)
+
+  theme     ThemePreference @default(SYSTEM)
+
+  role      Role    @default(USER)
+
+  status          AccountStatus @default(ACTIVE)
+  bannedAt        DateTime?
+  suspendedUntil  DateTime?
+
+  isAdult         Boolean @default(false)
+
+  emailVerified Boolean @default(false)
+  lastLogin    DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+  AUTHOR
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum ThemePreference {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum AvatarProvider {
+  GENERATED
+  UPLOADED
+}

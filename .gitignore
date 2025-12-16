@@ -3,3 +3,4 @@ anotacoes/
 .env
 
 node_modules/
+/src/generated/prisma
