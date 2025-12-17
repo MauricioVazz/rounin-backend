@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+// Importação das rotas
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
 
@@ -14,5 +16,7 @@ app.get("/health", (req, res) => {
         service: "Rōnin API",
     });
 });
+// Rotas de usuário
+app.use("/users", userRouter);
 
 export default app;
